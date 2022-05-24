@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HearthisCategoryDTO (
+data class HearthisCategoryDTO(
     @SerialName("id")
     var id: String?,
 
@@ -19,7 +19,7 @@ data class HearthisCategoryDTO (
 )
 
 @Serializable
-data class HearthisPlaylistDTO (
+data class HearthisPlaylistDTO(
     @SerialName("id")
     var id: String?,
 
@@ -58,7 +58,7 @@ data class HearthisPlaylistDTO (
 )
 
 @Serializable
-data class HearthisUserDTO (
+data class HearthisUserDTO(
     @SerialName("id")
     var id: String?,
 
@@ -252,7 +252,72 @@ data class HearthisTrackDTO(
     var reshared: Boolean?,
 )
 
-class HearthisTrackList: ArrayList<HearthisTrackDTO>()
-class HearthisUserList: ArrayList<HearthisUserDTO>()
-class HearthisCategoryList: ArrayList<HearthisCategoryDTO>()
-class HearthisPlaylistList: ArrayList<HearthisPlaylistDTO>()
+@Serializable
+data class HearthisCategoryTrackUserDTO(
+
+    @SerialName("id") var id: String? = null,
+    @SerialName("permalink") var permalink: String? = null,
+    @SerialName("username") var username: String? = null,
+    @SerialName("caption") var caption: String? = null,
+    @SerialName("uri") var uri: String? = null,
+    @SerialName("permalink_url") var permalinkUrl: String? = null,
+    @SerialName("avatar_url") var avatarUrl: String? = null
+
+)
+
+@Serializable
+data class HearthisCategoryTrackDTO(
+
+    @SerialName("id") var id: String? = null,
+    @SerialName("private") var private: String? = null,
+    @SerialName("created_at") var createdAt: String? = null,
+    @SerialName("release_date") var releaseDate: String? = null,
+    @SerialName("release_timestamp") var releaseTimestamp: Int? = null,
+    @SerialName("user_id") var userId: String? = null,
+    @SerialName("duration") var duration: String? = null,
+    @SerialName("permalink") var permalink: String? = null,
+    @SerialName("description") var description: String? = null,
+    @SerialName("geo") var geo: String? = null,
+    @SerialName("tags") var tags: String? = null,
+    @SerialName("taged_artists") var tagedArtists: String? = null,
+    @SerialName("bpm") var bpm: String? = null,
+    @SerialName("key") var key: String? = null,
+    @SerialName("license") var license: String? = null,
+    @SerialName("version") var version: String? = null,
+    @SerialName("type") var type: String? = null,
+    @SerialName("downloadable") var downloadable: String? = null,
+    @SerialName("genre") var genre: String? = null,
+    @SerialName("genre_slush") var genreSlush: String? = null,
+    @SerialName("title") var title: String? = null,
+    @SerialName("uri") var uri: String? = null,
+    @SerialName("permalink_url") var permalinkUrl: String? = null,
+    @SerialName("thumb") var thumb: String? = null,
+    @SerialName("artwork_url") var artworkUrl: String? = null,
+    @SerialName("artwork_url_retina") var artworkUrlRetina: String? = null,
+    @SerialName("background_url") var backgroundUrl: String? = null,
+    @SerialName("waveform_data") var waveformData: String? = null,
+    @SerialName("waveform_url") var waveformUrl: String? = null,
+    @SerialName("user") var user: HearthisCategoryTrackUserDTO? = null,
+    @SerialName("stream_url") var streamUrl: String? = null,
+    @SerialName("preview_url") var previewUrl: String? = null,
+    @SerialName("download_url") var downloadUrl: String? = null,
+    @SerialName("download_filename") var downloadFilename: String? = null,
+    @SerialName("playback_count") var playbackCount: String? = null,
+    @SerialName("download_count") var downloadCount: String? = null,
+    @SerialName("favoritings_count") var favoritingsCount: String? = null,
+    @SerialName("reshares_count") var resharesCount: String? = null,
+    @SerialName("comment_count") var commentCount: String? = null,
+    @SerialName("played") var played: Boolean? = null,
+    @SerialName("favorited") var favorited: Boolean? = null,
+    @SerialName("liked") var liked: Boolean? = null,
+    @SerialName("reshared") var reshared: Boolean? = null,
+    @SerialName("fan_exclusive_play") var fanExclusivePlay: Int? = null,
+    @SerialName("fan_exclusive_download") var fanExclusiveDownload: Int? = null
+
+)
+
+class HearthisTrackList : ArrayList<HearthisTrackDTO>()
+class HearthisUserList : ArrayList<HearthisUserDTO>()
+class HearthisCategoryList : ArrayList<HearthisCategoryDTO>()
+class  HearthisCategoryTrackList : ArrayList<HearthisCategoryTrackDTO>()
+class HearthisPlaylistList : ArrayList<HearthisPlaylistDTO>()
