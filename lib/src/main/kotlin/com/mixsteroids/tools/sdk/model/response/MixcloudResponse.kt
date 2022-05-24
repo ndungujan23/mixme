@@ -5,12 +5,22 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-abstract class MixcloudBaseDTO (
+abstract class MixcloudBaseDTO {
+    open var key: String? = null
+    open var url: String? = null
+    open var name: String? = null
+    open var type: String? = null
+    open var slug: String? = null
+    open var metadata: MixcloudMetadataDTO? = null
+}
+
+@Serializable
+data class MixcloudTagDTO (
     var key: String? = null,
     var url: String? = null,
     var name: String? = null,
     var type: String? = null,
-    var slug: String? = null,
+    var metadata: MixcloudMetadataDTO? = null
 )
 
 @Serializable
@@ -106,7 +116,22 @@ data class MixcloudUserDTO(
     var country: String?,
     var coverPictures: MixcloudCoverPicturesDTO?,
     var picture_primary_color: String?,
-    var metadata: MixcloudMetadataDTO?,
+): MixcloudBaseDTO()
+
+@Serializable
+data class MixcloudCommentDTO(
+    var user: MixcloudOwnerDTO?,
+    var submit_date: String?,
+    var comment: String?,
+): MixcloudBaseDTO()
+
+@Serializable
+data class MixcloudFeedDTO(
+    var title: String?,
+    var from: MixcloudOwnerDTO?,
+    var created_time: String?,
+    var cloudcasts: ArrayList<MixcloudShowDTO>?,
+    var users: ArrayList<MixcloudOwnerDTO>?,
 ): MixcloudBaseDTO()
 
 @Serializable
@@ -120,9 +145,9 @@ data class MixcloudPlaylistDTO(
 )
 
 @Serializable
-data class MixcloudCloudcastDTO(
+data class MixcloudShowDTO(
     var pictures: MixcloudPictureDTO?,
-    var tags: Set<MixcloudBaseDTO>?,
+    var tags: Set<MixcloudTagDTO>? = emptySet(),
     var created_time: String?,
     var updated_time: String?,
     var play_count: Int?,
@@ -144,37 +169,29 @@ data class MixcloudPagingDTO(
 )
 
 @Serializable
-data class MixcloudCommentDTO(
-    var user: MixcloudOwnerDTO?,
-    var submit_date: String?,
-    var comment: String?,
-): MixcloudBaseDTO()
-
-@Serializable
-data class MixcloudFeedDTO(
-    var title: String?,
-    var from: MixcloudOwnerDTO?,
-    var created_time: String?,
-    var cloudcasts: ArrayList<MixcloudCloudcastDTO>?,
-): MixcloudBaseDTO()
-
-@Serializable
 sealed class MixcloudSearchListDTO {
     abstract val name: String?
     abstract val paging: MixcloudPagingDTO?
 
     @Serializable
-    data class Owner(
+    data class Users(
         override val name: String? = null,
         override val paging: MixcloudPagingDTO? = null,
         val data: List<MixcloudOwnerDTO>? = emptyList(),
     ): MixcloudSearchListDTO()
 
     @Serializable
-    data class Cloudcasts(
+    data class Tags(
         override val name: String? = null,
         override val paging: MixcloudPagingDTO? = null,
-        val data: List<MixcloudCloudcastDTO>? = emptyList(),
+        val data: List<MixcloudTagDTO>? = emptyList(),
+    ): MixcloudSearchListDTO()
+
+    @Serializable
+    data class Shows(
+        override val name: String? = null,
+        override val paging: MixcloudPagingDTO? = null,
+        val data: List<MixcloudShowDTO>? = emptyList(),
     ): MixcloudSearchListDTO()
 
     @Serializable
@@ -196,5 +213,19 @@ sealed class MixcloudSearchListDTO {
         override val name: String? = null,
         override val paging: MixcloudPagingDTO? = null,
         val data: List<MixcloudOwnerDTO>? = emptyList(),
+    ): MixcloudSearchListDTO()
+
+    @Serializable
+    data class Feed(
+        override val name: String? = null,
+        override val paging: MixcloudPagingDTO? = null,
+        val data: List<MixcloudFeedDTO>? = emptyList(),
+    ): MixcloudSearchListDTO()
+
+    @Serializable
+    data class Comments(
+        override val name: String? = null,
+        override val paging: MixcloudPagingDTO? = null,
+        val data: List<MixcloudCommentDTO>? = emptyList(),
     ): MixcloudSearchListDTO()
 }

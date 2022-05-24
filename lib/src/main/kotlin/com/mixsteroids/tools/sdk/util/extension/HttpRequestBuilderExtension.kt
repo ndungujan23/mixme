@@ -31,12 +31,18 @@ fun HttpRequestBuilder.parameters(parameters: Map<String, Any?>) {
 }
 
 fun HttpRequestBuilder.parameterPagingMixcloud(paging: MixcloudPagingRequestDTO?) {
+
+    val limit = paging?.limit ?: ""
+    val offset = paging?.offset ?: ""
+    val since = paging?.since ?: ""
+    val until = paging?.until ?: ""
+
     parameters(
         mapOf(
-            "limit" to paging?.limit.toString(),
-            "offset" to paging?.offset.toString(),
-            "since" to paging?.since.toString(),
-            "until" to paging?.until.toString(),
+            "limit" to limit,
+            "offset" to offset,
+            "since" to since,
+            "until" to until,
         ),
     )
 }

@@ -4,19 +4,14 @@ import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.logging.*
 import io.ktor.http.*
 
 class HttpClientFactory(
     log_level: HttpLogLevel = HttpLogLevel.NONE,
-    request_timeout_ms: Long = 60_000,
-    connection_timeout_ms: Long = 60_000,
-    socket_timeout_ms: Long = 60_000,
+    timeout_ms: Long = 60_000,
 ) {
-    private val requestTimeoutMs = request_timeout_ms
-    private val connectionTimeoutMs = connection_timeout_ms
-    private val socketTimeoutMs = socket_timeout_ms
+    private val timeoutMs = timeout_ms
 
     private val logLevel: LogLevel = when (log_level) {
         HttpLogLevel.ALL -> LogLevel.ALL
@@ -27,9 +22,10 @@ class HttpClientFactory(
     }
 
     fun build(): HttpClient = HttpClient(OkHttp) {
+        expectSuccess = true
 
         install(Logging) {
-            logger = Logger.DEFAULT
+            logger = Logger.SIMPLE
             level = logLevel
         }
 
@@ -44,9 +40,10 @@ class HttpClientFactory(
         }
 
         install(HttpTimeout) {
-            requestTimeoutMillis = requestTimeoutMs
-            connectTimeoutMillis = connectionTimeoutMs
-            socketTimeoutMillis = socketTimeoutMs
+            requestTimeoutMillis = timeoutMs
+            connectTimeoutMillis = timeoutMs
+            socketTimeoutMillis = timeoutMs
         }
+
     }
 }
